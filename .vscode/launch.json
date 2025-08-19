@@ -1,0 +1,82 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'microcad-lsp'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=microcad-lsp",
+                    "--package=lsp-microcad"
+                ],
+                "filter": {
+                    "name": "microcad-lsp",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'microcad-lsp'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=microcad-lsp",
+                    "--package=lsp-microcad"
+                ],
+                "filter": {
+                    "name": "microcad-lsp",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'microcad-lsp-client'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=microcad-lsp-client",
+                    "--package=lsp-microcad"
+                ],
+                "filter": {
+                    "name": "microcad-lsp-client",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'microcad-lsp-client'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=microcad-lsp-client",
+                    "--package=lsp-microcad"
+                ],
+                "filter": {
+                    "name": "microcad-lsp-client",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}

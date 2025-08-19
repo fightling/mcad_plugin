@@ -81,11 +81,15 @@ impl LanguageServer for Backend {
 
 #[tokio::main]
 async fn main() {
-    env_logger::init();
+    let target =
+        Box::new(std::fs::File::create("microcad-lsp.log").expect("could not open log file"));
+    env_logger::Builder::new()
+        .target(env_logger::Target::Pipe(target))
+        .init();
 
     tracing_subscriber::fmt().init();
 
-    println!("Starting LSP server");
+    log::info!("Starting LSP server");
 
     let listener = tokio::net::TcpListener::bind("127.0.0.1:8080")
         .await

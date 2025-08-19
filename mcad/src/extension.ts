@@ -47,7 +47,6 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	};
 
-
 	// Create the language client and start the client.
 	client = new LanguageClient(
 		'microcad-lsp',
@@ -63,9 +62,10 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate(): Thenable<void> | undefined {
-	if (!client) {
-		return undefined;
-	}
-	return client.stop();
+	return undefined;
+	/*	if (!client) {
+			return undefined;
+		}
+		return client.stop();*/
 }
 
