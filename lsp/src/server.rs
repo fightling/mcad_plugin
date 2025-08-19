@@ -79,14 +79,29 @@ impl LanguageServer for Backend {
     }
 }
 
+use clap::Parser;
+
+#[derive(Parser)]
+#[command(version, about, long_about = None)]
+struct Cli {
+    /// log into given file
+    #[arg(short, long, value_name = "FILE")]
+    log_file: Option<std::path::PathBuf>,
+}
+
 #[tokio::main]
 async fn main() {
-    let file = std::fs::File::create("microcad-lsp.log").expect("could not open log file");
-    let target = Box::new(file);
-    env_logger::Builder::new()
-        .target(env_logger::Target::Pipe(target))
-        .filter(None, log::LevelFilter::Trace)
-        .init();
+    let cli = Cli::parse();
+    if let Some(log_file) = cli.log_file {
+        let file = std::fs::File::create(log_file).expect("could not open log file");
+        let target = Box::new(file);
+        env_logger::Builder::new()
+            .target(env_logger::Target::Pipe(target))
+            .filter(None, log::LevelFilter::Trace)
+            .init();
+    } else {
+        env_logger::init()
+    }
 
     log::info!("Starting LSP server");
 
