@@ -81,13 +81,12 @@ impl LanguageServer for Backend {
 
 #[tokio::main]
 async fn main() {
-    let target =
-        Box::new(std::fs::File::create("microcad-lsp.log").expect("could not open log file"));
+    let file = std::fs::File::create("microcad-lsp.log").expect("could not open log file");
+    let target = Box::new(file);
     env_logger::Builder::new()
         .target(env_logger::Target::Pipe(target))
+        .filter(None, log::LevelFilter::Trace)
         .init();
-
-    tracing_subscriber::fmt().init();
 
     log::info!("Starting LSP server");
 
