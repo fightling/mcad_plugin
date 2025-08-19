@@ -5,6 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Run Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}/mcad/"
+            ],
+            "outFiles": [
+                "${workspaceFolder}/mcad/dist/**/*.js"
+            ],
+            "preLaunchTask": "tsc: watch - mcad/tsconfig.json"
+        },
+        {
             "type": "lldb",
             "request": "launch",
             "name": "Debug executable 'microcad-lsp'",
