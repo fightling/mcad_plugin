@@ -32,6 +32,7 @@ struct Backend {
 #[async_trait]
 impl LanguageServer for Backend {
     async fn initialize(&self, _: InitializeParams) -> Result<InitializeResult> {
+        log::info!("Event: initialize");
         Ok(InitializeResult {
             server_info: None,
             capabilities: ServerCapabilities {
@@ -44,16 +45,19 @@ impl LanguageServer for Backend {
     }
 
     async fn initialized(&self, _: InitializedParams) {
+        log::info!("Event: initialized");
         self.client
             .log_message(MessageType::INFO, "server initialized!")
             .await;
     }
 
     async fn shutdown(&self) -> Result<()> {
+        log::info!("Event: shutdown");
         Ok(())
     }
 
     async fn did_change(&self, params: DidChangeTextDocumentParams) {
+        log::info!("Event: did_change");
         let uri = params.text_document.uri;
         let content_changes = params.content_changes;
 
@@ -102,15 +106,22 @@ async fn main() {
     } else {
         env_logger::init()
     }
+    /*    // construct a subscriber that prints formatted traces to stdout
+        let subscriber = tracing_subscriber::FmtSubscriber::new();
+        // use that subscriber to process traces emitted after this point
+        tracing::subscriber::set_global_default(subscriber).expect("init log failed");
+    */
 
     log::info!("Starting LSP server");
-
     let listener = tokio::net::TcpListener::bind("127.0.0.1:8080")
         .await
         .unwrap();
+    log::info!("LSP server listening...");
     let (stream, _) = listener.accept().await.unwrap();
+    log::info!("Client has connected to LSP service");
     let (read, write) = tokio::io::split(stream);
     let (service, socket) = LspService::new(|client| Backend { client });
+    log::info!("LSP service has been created");
 
     Server::new(read, write, socket).serve(service).await;
 }

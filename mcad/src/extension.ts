@@ -1,18 +1,12 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { ChildProcess, spawn } from "child_process";
-
 import {
 	LanguageClient,
 	LanguageClientOptions,
-	ServerOptions,
-	Executable,
-	TransportKind
 } from 'vscode-languageclient/node';
 
 let client: LanguageClient;
-let lsp: ChildProcess;
 
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
@@ -52,7 +46,8 @@ export function activate(context: vscode.ExtensionContext) {
 		'microcad-lsp',
 		'Microcad LSP',
 		{
-			command: "microcad-lsp"
+			command: "microcad-lsp",
+			args: ["-l", "/home/pat/git/rustfahrt/my_rust_project/mcad_plugin/microcad-lsp.log"],
 		},
 		clientOptions
 	);

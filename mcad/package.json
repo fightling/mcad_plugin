@@ -3,6 +3,7 @@
   "displayName": "mcad",
   "description": "21st Century CAD",
   "version": "0.0.1",
+  "repository": "rep",
   "engines": {
     "vscode": "^1.103.0"
   },
